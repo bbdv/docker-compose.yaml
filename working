@@ -1,96 +1,97 @@
-+version: "3"
-+services:
-+  # Deluge - torrent downloader
-+  deluge:
-+    image: linuxserver/deluge
-+    container_name: deluge
-+    network_mode: host
-+    environment:
-+      - PUID=0
-+      - PGID=0
-+      - UMASK_SET=<022>
-+      - TZ=America/Phoenix
-+    volumes:
-+      - /opt/deluge/config:/config
-+      - /mnt/synas/downloads:/downloads    
-+    restart: unless-stopped
-+
-+  # Radarr - Movie indexer
-+  radarr:
-+    image: linuxserver/radarr
-+    container_name: radarr
-+    network_mode: host
-+    environment:
-+      - PUID=0
-+      - PGID=0
-+      - UMASK_SET=<022>
-+      - TZ=America/Phoenix
-+    volumes:
-+      - /opt/radarr:/config      
-+      - /mnt/synas/Movies:/movies    
-+      - /mnt/synas/downloads:/downloads
-+    restart: unless-stopped
-+
-+  # Sonarr - Television indexer
-+  sonarr:
-+    image: linuxserver/sonarr
-+    container_name: sonarr
-+    network_mode: host
-+    environment:
-+      - PUID=0
-+      - PGID=0
-+      - UMASK_SET=<022>
-+      - TZ=America/Phoenix
-+    volumes:
-+      - /opt/sonarr:/config      
-+      - /mnt/synas/TV:/tv    
-+      - /mnt/synas/downloads:/downloads
-+    restart: unless-stopped
-+
-+  # Jackett - torrent indexer for Radarr/Sonarr
-+  jackett:
-+    image: linuxserver/jackett
-+    container_name: jackett
-+    network_mode: host
-+    environment:
-+      - PUID=0
-+      - PGID=0
-+      - UMASK_SET=<022>
-+      - TZ=America/Phoenix
-+    volumes:
-+      - /opt/jackett:/config          
-+      - /mnt/synas/downloads:/downloads
-+    restart: unless-stopped
-+
-+  # Tautulli - Plex Stats (formally PlexPy)
-+  tautulli:
-+    image: linuxserver/tautulli
-+    container_name: tautulli
-+    network_mode: host
-+    environment:
-+      - PUID=0
-+      - PGID=0
-+      - UMASK_SET=<022>
-+      - TZ=America/Phoenix
-+    volumes:
-+      - /opt/tautulli:/config      
-+    restart: unless-stopped
-+
-+  # Muximux - HTPC manager
-+  muximux:
-+    image: linuxserver/muximux
-+    container_name: muximux
-+    network_mode: host
-+    environment:
-+      - PUID=996
-+      - PGID=993
-+      - UMASK_SET=<022>
-+      - TZ=America/New_York
-+    volumes:
-+      - /opt/muximux:/config      
-+    restart: unless-stopped
-+
-+  #pihole:
+version: "3"
+services:
+  # Deluge - torrent downloader
+  deluge:
+    image: linuxserver/deluge
+    container_name: deluge
+    network_mode: host
+    environment:
+      - PUID=0
+      - PGID=0
+      - UMASK_SET=<022>
+      - TZ=America/Phoenix
+    volumes:
+      - /opt/deluge/config:/config
+      - /mnt/synas/downloads:/downloads    
+    restart: unless-stopped
+
+  # Radarr - Movie indexer
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    network_mode: host
+    environment:
+      - PUID=0
+      - PGID=0
+      - UMASK_SET=<022>
+      - TZ=America/Phoenix
+    volumes:
+      - /opt/radarr:/config      
+      - /mnt/synas/Movies:/movies    
+      - /mnt/synas/downloads:/downloads
+    restart: unless-stopped
+
+  # Sonarr - Television indexer
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    network_mode: host
+    environment:
+      - PUID=0
+      - PGID=0
+      - UMASK_SET=<022>
+      - TZ=America/Phoenix
+    volumes:
+      - /opt/sonarr:/config      
+      - /mnt/synas/TV:/tv    
+      - /mnt/synas/downloads:/downloads
+    restart: unless-stopped
+
+  # Jackett - torrent indexer for Radarr/Sonarr
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    network_mode: host
+    environment:
+      - PUID=0
+      - PGID=0
+      - UMASK_SET=<022>
+      - TZ=America/Phoenix
+    volumes:
+      - /opt/jackett:/config          
+      - /mnt/synas/downloads:/downloads
+    restart: unless-stopped
+
+  # Tautulli - Plex Stats (formally PlexPy)
+  tautulli:
+    image: linuxserver/tautulli
+    container_name: tautulli
+    network_mode: host
+    environment:
+      - PUID=0
+      - PGID=0
+      - UMASK_SET=<022>
+      - TZ=America/Phoenix
+    volumes:
+      - /opt/tautulli:/config      
+    restart: unless-stopped
+
+  # Muximux - HTPC manager
+  muximux:
+    image: linuxserver/muximux
+    container_name: muximux
+    network_mode: host
+    environment:
+      - PUID=996
+      - PGID=993
+      - UMASK_SET=<022>
+      - TZ=America/Phoenix
+    volumes:
+      - /opt/muximux:/config      
+    restart: unless-stopped
+
+  # Pi-Hole - Network Ad Blocker
+  pi-hole:
     image: pihole/pihole:latest
     container_name: pihole
     ports:
@@ -111,6 +112,6 @@
       - 1.1.1.1
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
+   cap_add:
       - NET_ADMIN
     restart: unless-stopped
