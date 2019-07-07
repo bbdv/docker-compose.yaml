@@ -46,7 +46,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
       - URL=yourdomain.url
       - SUBDOMAINS=www,
       - VALIDATION=http
@@ -98,6 +98,7 @@ services:
       - downloads-folder:/downloads
     ports:
       - 8090:8090
+      
 ---
 version: "2"
 services:
@@ -107,7 +108,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
     volumes:
       - /path/to/appdata:/config
       - path/to/data:/data
@@ -124,7 +125,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
     volumes:
       - /path/to/appdata/config:/config
     ports:
@@ -142,7 +143,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
     volumes:
       - path to data:/config
       - path/to/downloads:/downloads
@@ -159,7 +160,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
       - BASE_URL=/ombi #optional
     volumes:
       - /path/to/appdata/config:/config
@@ -178,7 +179,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
       - INTERFACE=eth0 #optional
     volumes:
       - path to data:/config
@@ -197,7 +198,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=your timezone, eg Europe/London
+      - TZ=America/Phoenix
     volumes:
       - path to data:/config
     ports:
@@ -217,7 +218,7 @@ services:
       - VERSION=docker
     volumes:
       - /path/to/library:/config
-      - path/to/tvseries:/data/tvshows
+      - /path/to/tvseries:/data/tvshows
       - /path/to/movies:/data/movies
       - /path for transcoding:/transcode
     restart: unless-stopped
@@ -231,7 +232,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
       - UMASK_SET=022 #optional
     volumes:
       - path to data:/config
@@ -250,7 +251,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Phoenix
     volumes:
       - path to data:/config
       - path to downloads:/downloads
@@ -260,30 +261,43 @@ services:
       - 9090:9090
     restart: unless-stopped
     
-  docker create \
-  --name=sonarr \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Europe/London \
-  -e UMASK_SET=022 `#optional` \
-  -p 8989:8989 \
-  -v path to data:/config \
-  -v path/to/tvseries:/tv \
-  -v path/to/downloadclient-downloads:/downloads \
-  --restart unless-stopped \
-  linuxserver/sonarr
+---
+version: "2"
+services:
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Phoenix
+      - UMASK_SET=022 #optional
+    volumes:
+      - path to data:/config
+      - path/to/tvseries:/tv
+      - path/to/downloadclient-downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
   
-docker create \
-  --name=tautulli \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Europe/London \
-  -p 8181:8181 \
-  -v path to data:/config \
-  -v path to plex logs:/logs \
-  --restart unless-stopped \
-  linuxserver/tautulli
+---
+version: "2"
+services:
+  tautulli:
+    image: linuxserver/tautulli
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Phoenix
+    volumes:
+      - path to data:/config
+      - path to plex logs:/logs
+    ports:
+      - 8181:8181
+    restart: unless-stopped
   
+---  
 version: "3"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
@@ -298,7 +312,7 @@ services:
       - "80:80/tcp"
       - "443:443/tcp"
     environment:
-      TZ: 'America/Chicago'
+      TZ: 'America/Phoenix'
       # WEBPASSWORD: 'set a secure password here or it will be random'
     # Volumes store your data between container upgrades
     volumes:
