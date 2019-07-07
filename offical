@@ -1,0 +1,314 @@
+#from the offical Docker hub 
+
+---
+version: "2"
+services:
+  deluge:
+    image: linuxserver/deluge
+    container_name: deluge
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK_SET=022
+      - TZ=timezone
+    volumes:
+      - /path/to/deluge/config:/config
+      - /path/to/your/downloads:/downloads
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Phoenix
+      - RUN_OPTS=run options here #optional
+    volumes:
+      - path to data:/config
+      - path to blackhole:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=yourdomain.url
+      - SUBDOMAINS=www,
+      - VALIDATION=http
+      - DNSPLUGIN=cloudflare #optional
+      - DUCKDNSTOKEN=token #optional
+      - EMAIL=e-mail #optional
+      - DHLEVEL=2048 #optional
+      - ONLY_SUBDOMAINS=false #optional
+      - EXTRA_DOMAINS=extradomains #optional
+      - STAGING=false #optional
+    volumes:
+      - /path/to/appdata/config:/config
+    ports:
+      - 443:443
+      - 80:80 #optional
+    restart: unless-stopped
+
+---
+version: "2"
+services:
+  lidarr:
+    image: linuxserver/lidarr
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Phoenix
+      - UMASK_SET=022 #optional
+    volumes:
+      - /path/to/appdata/config:/config
+      - /path/to/music:/music
+      - /path/to/downloads:/downloads
+    ports:
+      - 8686:8686
+    restart: unless-stopped 
+    
+---
+version: "2"
+services:
+  mylar:
+    image: linuxserver/mylar
+    container_name: mylar
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - path to data:/config
+      - comics-folder:/comics
+      - downloads-folder:/downloads
+    ports:
+      - 8090:8090
+---
+version: "2"
+services:
+  nextcloud:
+    image: linuxserver/nextcloud
+    container_name: nextcloud
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /path/to/appdata:/config
+      - path/to/data:/data
+    ports:
+      - 443:443
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  nginx:
+    image: linuxserver/nginx
+    container_name: nginx
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /path/to/appdata/config:/config
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped    
+    restart: unless-stopped    
+
+---
+version: "2"
+services:
+  nzbget:
+    image: linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - path to data:/config
+      - path/to/downloads:/downloads
+    ports:
+      - 6789:6789
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  ombi:
+    image: linuxserver/ombi
+    container_name: ombi
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - BASE_URL=/ombi #optional
+    volumes:
+      - /path/to/appdata/config:/config
+    ports:
+      - 3579:3579
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  openvpn-as:
+    image: linuxserver/openvpn-as
+    container_name: openvpn-as
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - INTERFACE=eth0 #optional
+    volumes:
+      - path to data:/config
+    ports:
+      - 943:943
+      - 9443:9443
+      - 1194:1194/udp
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  organizr:
+    image: linuxserver/organizr
+    container_name: organizr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=your timezone, eg Europe/London
+    volumes:
+      - path to data:/config
+    ports:
+      - 9983:80
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /path/to/library:/config
+      - path/to/tvseries:/data/tvshows
+      - /path/to/movies:/data/movies
+      - /path for transcoding:/transcode
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
+    volumes:
+      - path to data:/config
+      - path/to/movies:/movies
+      - path/to/downloadclient-downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    
+---
+version: "2"
+services:
+  sabnzbd:
+    image: linuxserver/sabnzbd
+    container_name: sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - path to data:/config
+      - path to downloads:/downloads
+      - path to incomplete downloads:/incomplete-downloads #optional
+    ports:
+      - 8080:8080
+      - 9090:9090
+    restart: unless-stopped
+    
+  docker create \
+  --name=sonarr \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Europe/London \
+  -e UMASK_SET=022 `#optional` \
+  -p 8989:8989 \
+  -v path to data:/config \
+  -v path/to/tvseries:/tv \
+  -v path/to/downloadclient-downloads:/downloads \
+  --restart unless-stopped \
+  linuxserver/sonarr
+  
+docker create \
+  --name=tautulli \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Europe/London \
+  -p 8181:8181 \
+  -v path to data:/config \
+  -v path to plex logs:/logs \
+  --restart unless-stopped \
+  linuxserver/tautulli
+  
+version: "3"
+
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: 'America/Chicago'
+      # WEBPASSWORD: 'set a secure password here or it will be random'
+    # Volumes store your data between container upgrades
+    volumes:
+       - './etc-pihole/:/etc/pihole/'
+       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped  
