@@ -17,9 +17,6 @@ services:
       - /path/to/your/downloads:/downloads
     restart: unless-stopped
     
----
-version: "2"
-services:
   jackett:
     image: linuxserver/jackett
     container_name: jackett
@@ -35,9 +32,6 @@ services:
       - 9117:9117
     restart: unless-stopped
     
----
-version: "2"
-services:
   letsencrypt:
     image: linuxserver/letsencrypt
     container_name: letsencrypt
@@ -64,9 +58,6 @@ services:
       - 80:80 #optional
     restart: unless-stopped
 
----
-version: "2"
-services:
   lidarr:
     image: linuxserver/lidarr
     container_name: lidarr
@@ -83,9 +74,6 @@ services:
       - 8686:8686
     restart: unless-stopped 
     
----
-version: "2"
-services:
   mylar:
     image: linuxserver/mylar
     container_name: mylar
@@ -99,9 +87,6 @@ services:
     ports:
       - 8090:8090
       
----
-version: "2"
-services:
   nextcloud:
     image: linuxserver/nextcloud
     container_name: nextcloud
@@ -116,9 +101,6 @@ services:
       - 443:443
     restart: unless-stopped
     
----
-version: "2"
-services:
   nginx:
     image: linuxserver/nginx
     container_name: nginx
@@ -134,9 +116,6 @@ services:
     restart: unless-stopped    
     restart: unless-stopped    
 
----
-version: "2"
-services:
   nzbget:
     image: linuxserver/nzbget
     container_name: nzbget
@@ -151,9 +130,6 @@ services:
       - 6789:6789
     restart: unless-stopped
     
----
-version: "2"
-services:
   ombi:
     image: linuxserver/ombi
     container_name: ombi
@@ -168,9 +144,6 @@ services:
       - 3579:3579
     restart: unless-stopped
     
----
-version: "2"
-services:
   openvpn-as:
     image: linuxserver/openvpn-as
     container_name: openvpn-as
@@ -189,9 +162,6 @@ services:
       - 1194:1194/udp
     restart: unless-stopped
     
----
-version: "2"
-services:
   organizr:
     image: linuxserver/organizr
     container_name: organizr
@@ -205,9 +175,6 @@ services:
       - 9983:80
     restart: unless-stopped
     
----
-version: "2"
-services:
   plex:
     image: linuxserver/plex
     container_name: plex
@@ -223,9 +190,6 @@ services:
       - /path for transcoding:/transcode
     restart: unless-stopped
     
----
-version: "2"
-services:
   radarr:
     image: linuxserver/radarr
     container_name: radarr
@@ -242,9 +206,6 @@ services:
       - 7878:7878
     restart: unless-stopped
     
----
-version: "2"
-services:
   sabnzbd:
     image: linuxserver/sabnzbd
     container_name: sabnzbd
@@ -280,9 +241,6 @@ services:
       - 8989:8989
     restart: unless-stopped
   
----
-version: "2"
-services:
   tautulli:
     image: linuxserver/tautulli
     container_name: tautulli
@@ -297,7 +255,6 @@ services:
       - 8181:8181
     restart: unless-stopped
   
----  
 version: "3"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
